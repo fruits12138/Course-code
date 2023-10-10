@@ -10,7 +10,7 @@
 using namespace std;
 
 
-//---------------------¸÷¸öÀàĞÍµÄ½á¹¹Ìå-------------------------
+//---------------------å„ä¸ªç±»å‹çš„ç»“æ„ä½“-------------------------
 // 
 typedef struct Time {
 	int tmHour;
@@ -18,53 +18,53 @@ typedef struct Time {
 }Time;
 
 typedef struct  Customer {
-	//int id; // ¹Ë¿ÍĞòºÅ
-	Time arrivalTime;//µ½´ïÊ±¼ä
-	Time serviceTime;//ĞèÒªµÄ·şÎñÊ±¼ä
-	Time serviceTimeRemain;//·şÎñÊ£ÓàÊ±¼ä
-	Time leavingTime;//Àë¿ªÊ±¼ä
+	//int id; // é¡¾å®¢åºå·
+	Time arrivalTime;//åˆ°è¾¾æ—¶é—´
+	Time serviceTime;//éœ€è¦çš„æœåŠ¡æ—¶é—´
+	Time serviceTimeRemain;//æœåŠ¡å‰©ä½™æ—¶é—´
+	Time leavingTime;//ç¦»å¼€æ—¶é—´
 }Customer;
-//Êı¾İÀàĞÍ
+//æ•°æ®ç±»å‹
 #define ElemType Customer
 
-//¶ÓÁĞ½áµãÀàĞÍ
+//é˜Ÿåˆ—ç»“ç‚¹ç±»å‹
 typedef struct QueueNode
 {
-	ElemType data;          //Êı¾İÓò
-	struct QueueNode* next; //Ö¸ÕëÓò
+	ElemType data;          //æ•°æ®åŸŸ
+	struct QueueNode* next; //æŒ‡é’ˆåŸŸ
 }QueueNode;
 
-//Á´Ê½¶ÓÁĞ¹ÜÀí½á¹¹
+//é“¾å¼é˜Ÿåˆ—ç®¡ç†ç»“æ„
 typedef struct LinkQueue
 {
-	QueueNode* front;  //¶ÓÍ·Ö¸Õë
-	QueueNode* tail;   //¶ÓÎ²Ö¸Õë
+	QueueNode* front;  //é˜Ÿå¤´æŒ‡é’ˆ
+	QueueNode* tail;   //é˜Ÿå°¾æŒ‡é’ˆ
 }LinkQueue;
 
 
 
 typedef struct Window {
-	Time remainingTime;//Ê£ÓàÊ±³¤,¶¯Ì¬Á¿,Ã»ÓÃ
-	Time sumTime;//¹Ë¿ÍÔÚÒøĞĞµÈ´ıµÄ×ÜÊ±³¤£¬¶¯Ì¬Á¿,Ã¿·şÎñÒ»¸öÔö¼ÓÒ»µã,Í³¼ÆÃ¿¸ö¹Ë¿ÍµÄ¶ºÁôÊ±³¤
-	int sumPerson;//½Ó´ı×ÜÈËÊı
-	int waitPerson;//ÅÅ¶ÓÈËÊı
+	Time remainingTime;//å‰©ä½™æ—¶é•¿,åŠ¨æ€é‡,æ²¡ç”¨
+	Time sumTime;//é¡¾å®¢åœ¨é“¶è¡Œç­‰å¾…çš„æ€»æ—¶é•¿ï¼ŒåŠ¨æ€é‡,æ¯æœåŠ¡ä¸€ä¸ªå¢åŠ ä¸€ç‚¹,ç»Ÿè®¡æ¯ä¸ªé¡¾å®¢çš„é€—ç•™æ—¶é•¿
+	int sumPerson;//æ¥å¾…æ€»äººæ•°
+	int waitPerson;//æ’é˜Ÿäººæ•°
 	LinkQueue customerQue;
 }Window;
 
 typedef struct Bank {
-	Time startTime;//Ä¬ÈÏ8£º30
-	Time endTime;//Ä¬ÈÏ17£º00
-	int windowsNum;//Ä¬ÈÏÎª4
-	bool midRest;//Ä¬ÈÏ²»ÎçĞİ
-	Time midRest_StartTime;//ÎçĞİ¿ªÊ¼Ê±¼ä
-	Time midRest_EndTime;//ÎçĞİ½áÊøÊ±¼ä
-	Window queWindows[4];//Ä¬ÈÏÎª4¸ö´°¿Ú,Ò»¶Ñ³õÊ¼»¯,¶¯Ì¬Ë¢ĞÂ
-	LinkQueue waitCustomer;//µÈ´ı¹Ë¿Í(Ëæ»ú¹Ë¿ÍÊıÁ¿ºÍ¹Ë¿ÍµÄÒµÎñ°ìÀíÊ±¼äºÍ¹Ë¿ÍµÄµ½´ïÊ±¼ä)£¬Ò»¿ªÊ¼¹Ì¶¨
-	int sumCustomer;//×ÜµÄ¹Ë¿ÍÊı
+	Time startTime;//é»˜è®¤8ï¼š30
+	Time endTime;//é»˜è®¤17ï¼š00
+	int windowsNum;//é»˜è®¤ä¸º4
+	bool midRest;//é»˜è®¤ä¸åˆä¼‘
+	Time midRest_StartTime;//åˆä¼‘å¼€å§‹æ—¶é—´
+	Time midRest_EndTime;//åˆä¼‘ç»“æŸæ—¶é—´
+	Window queWindows[4];//é»˜è®¤ä¸º4ä¸ªçª—å£,ä¸€å †åˆå§‹åŒ–,åŠ¨æ€åˆ·æ–°
+	LinkQueue waitCustomer;//ç­‰å¾…é¡¾å®¢(éšæœºé¡¾å®¢æ•°é‡å’Œé¡¾å®¢çš„ä¸šåŠ¡åŠç†æ—¶é—´å’Œé¡¾å®¢çš„åˆ°è¾¾æ—¶é—´)ï¼Œä¸€å¼€å§‹å›ºå®š
+	int sumCustomer;//æ€»çš„é¡¾å®¢æ•°
 }Bank;
 
 
-//-----------------¶ÓÁĞ½á¹¹Ìå-------------------
+//-----------------é˜Ÿåˆ—ç»“æ„ä½“-------------------
 void InitQueue(LinkQueue* Q);
 void EnQueue(LinkQueue* Q, ElemType x);
 void DeQueue(LinkQueue* Q);
@@ -74,7 +74,7 @@ void ClearQueue(LinkQueue* Q);
 void DestroyQueue(LinkQueue* Q);
 Customer* GetHead(LinkQueue* que);
 
-//------------³£ÓÃº¯Êı------------------
+//------------å¸¸ç”¨å‡½æ•°------------------
 Time plus(Time a, Time b);
 
 bool judge(Time a, Time b);
@@ -166,14 +166,14 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //private:
 //	//int custormer_ID;
 //	
-//	Time arrivalTime;//µ½´ïÊ±¼ä
-//	int total_time;//»»Ëã³É·ÖÖÓ
+//	Time arrivalTime;//åˆ°è¾¾æ—¶é—´
+//	int total_time;//æ¢ç®—æˆåˆ†é’Ÿ
 //
-//	int serviceTime;//ĞèÒªµÄ·şÎñÊ±¼ä
-//	int serviceTimeRemain;//·şÎñÊ£ÓàÊ±¼ä
-//	int leavingTime;//Àë¿ªÊ±¼ä
+//	int serviceTime;//éœ€è¦çš„æœåŠ¡æ—¶é—´
+//	int serviceTimeRemain;//æœåŠ¡å‰©ä½™æ—¶é—´
+//	int leavingTime;//ç¦»å¼€æ—¶é—´
 //public:
-//	//¹¹Ôìº¯Êı£¬Ëæ»ú³õÊ¼»¯
+//	//æ„é€ å‡½æ•°ï¼Œéšæœºåˆå§‹åŒ–
 //	Customer() {
 //		this->arrivalTime.tmHour = genRand(8, 16);
 //		this->arrivalTime.tmMin = genRand(0, 59);
@@ -184,7 +184,7 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //		
 //		this->leavingTime = 0;
 //	}
-//	//ÅÅĞò
+//	//æ’åº
 //	void bubbleSort(Customer arr[],int len) {
 //		int i, j;
 //		Customer temp;
@@ -197,8 +197,8 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //				}
 //	}
 //
-//	//¸÷¸öÊôĞÔµÄget·½·¨
-//	int getCustomerArriveTime() {//»»Ëã³É·ÖÖÓ
+//	//å„ä¸ªå±æ€§çš„getæ–¹æ³•
+//	int getCustomerArriveTime() {//æ¢ç®—æˆåˆ†é’Ÿ
 //		int t = this->arrivalTime.tmHour * 60 + this->arrivalTime.tmMin;
 //		return t;
 //	}
@@ -214,7 +214,7 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //		return this->leavingTime;
 //	}
 //
-//	////¸÷¸öÊôĞÔµÄset·½·¨
+//	////å„ä¸ªå±æ€§çš„setæ–¹æ³•
 //	//void setCustomerArriveTime(Time _a) {
 //	//	this->arrivalTime.tmHour = _a.tmHour;
 //	//	this->arrivalTime.tmMin = _a.tmMin;
@@ -234,14 +234,14 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //
 //class Bank {
 //
-//	//Ä¬ÈÏ·â×°
+//	//é»˜è®¤å°è£…
 //private:
-//	Time startTime;//Ä¬ÈÏ8£º30
-//	Time endTime;//Ä¬ÈÏ17£º00
-//	int windowsNum;//Ä¬ÈÏÎª4
-//	bool midRest;//Ä¬ÈÏ²»ÎçĞİ
-//	Customer* waitCus;//ÅÅ¶ÓĞòÁĞ
-//	int sumCustomer;//×ÜµÄ½Ó´ı¹Ë¿ÍÊı
+//	Time startTime;//é»˜è®¤8ï¼š30
+//	Time endTime;//é»˜è®¤17ï¼š00
+//	int windowsNum;//é»˜è®¤ä¸º4
+//	bool midRest;//é»˜è®¤ä¸åˆä¼‘
+//	Customer* waitCus;//æ’é˜Ÿåºåˆ—
+//	int sumCustomer;//æ€»çš„æ¥å¾…é¡¾å®¢æ•°
 //	Window* win;
 //public:
 //	Bank(Time start,Time end,int _windowsNum,bool _midRest,int _sumCustomer,Customer* _cus,Window* _win) {
@@ -254,7 +254,7 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //		this->win = _win;
 //	}
 //
-//	//ËùÓĞÊôĞÔµÄget·½·¨
+//	//æ‰€æœ‰å±æ€§çš„getæ–¹æ³•
 //	int getStartTime() {
 //		int t = this->startTime.tmHour * 60 + this->startTime.tmMin;
 //		return t;
@@ -278,7 +278,7 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //	Window* getWindows() {
 //		return this->win;
 //	}
-//	////ËùÓĞÊôĞÔµÄset·½·¨
+//	////æ‰€æœ‰å±æ€§çš„setæ–¹æ³•
 //	//void setStartTime(Time _a) {
 //	//	this->startTime = _a;
 //	//}
@@ -303,8 +303,8 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //
 //class Window {
 //private:
-//	int remainingTime;//Ê£ÓàÊ±³¤,¶¯Ì¬Á¿,Ã»ÓÃ
-//	int sumTime;//¹Ë¿ÍÔÚÒøĞĞ´ıµÄ×ÜÊ±³¤£¬¶¯Ì¬Á¿,Ã¿·şÎñÒ»¸öÔö¼ÓÒ»µã,Í³¼ÆÃ¿¸ö¹Ë¿ÍµÄ¶ºÁôÊ±³¤
+//	int remainingTime;//å‰©ä½™æ—¶é•¿,åŠ¨æ€é‡,æ²¡ç”¨
+//	int sumTime;//é¡¾å®¢åœ¨é“¶è¡Œå¾…çš„æ€»æ—¶é•¿ï¼ŒåŠ¨æ€é‡,æ¯æœåŠ¡ä¸€ä¸ªå¢åŠ ä¸€ç‚¹,ç»Ÿè®¡æ¯ä¸ªé¡¾å®¢çš„é€—ç•™æ—¶é•¿
 //	Customer* cus;
 //public:
 //	Window(int _remainintTime,int _sumTime,Customer* _cus) {
@@ -312,7 +312,7 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //		this->sumTime = _sumTime;
 //		this->cus = _cus;
 //	}
-//	//ËùÓĞÊôĞÔµÄget·½·¨
+//	//æ‰€æœ‰å±æ€§çš„getæ–¹æ³•
 //	int getRemainTime() {
 //		return this->remainingTime;
 //	}
@@ -322,35 +322,35 @@ double BankSimulation_Day(int numCustomer = 20, bool midRest = false);
 //	Customer* getCustormerQueue() {
 //		return this->cus;
 //	}
-//	//ËùÓĞÊôĞÔµÄset·½·¨
+//	//æ‰€æœ‰å±æ€§çš„setæ–¹æ³•
 //};
 
 
 //
-////Êı¾İÀàĞÍ
+////æ•°æ®ç±»å‹
 //#define ElemType Customer
 //#define num 4
 //
-////¶ÓÁĞ½áµãÀàĞÍ
+////é˜Ÿåˆ—ç»“ç‚¹ç±»å‹
 //typedef struct QueueNode
 //{
-//	ElemType data;          //Êı¾İÓò
-//	struct QueueNode* next; //Ö¸ÕëÓò
+//	ElemType data;          //æ•°æ®åŸŸ
+//	struct QueueNode* next; //æŒ‡é’ˆåŸŸ
 //}QueueNode;
 //
-////Á´Ê½¶ÓÁĞ¹ÜÀí½á¹¹
+////é“¾å¼é˜Ÿåˆ—ç®¡ç†ç»“æ„
 //typedef struct LinkQueue
 //{
-//	QueueNode* front;  //¶ÓÍ·Ö¸Õë
-//	QueueNode* tail;   //¶ÓÎ²Ö¸Õë
+//	QueueNode* front;  //é˜Ÿå¤´æŒ‡é’ˆ
+//	QueueNode* tail;   //é˜Ÿå°¾æŒ‡é’ˆ
 //}LinkQueue;
 
-//-----------------------ÒøĞĞÏµÍ³----------------------------
+//-----------------------é“¶è¡Œç³»ç»Ÿ----------------------------
 
 
 
 
-//----------------------------------³£ÓÃº¯Êı--------------------------------------
+//----------------------------------å¸¸ç”¨å‡½æ•°--------------------------------------
 //
 //Time plus(Time a, Time b);
 //bool judge(Time a, Time b);
