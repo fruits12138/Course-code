@@ -3,22 +3,22 @@
 #include <string>
 #include <windows.h>
 using namespace std;
-//-------------------------³£ÓÃº¯Êı-----------------------------
-Time plus(Time a, Time b) {//Ê±¼äÏà¼Ó
+//-------------------------å¸¸ç”¨å‡½æ•°-----------------------------
+Time plus(Time a, Time b) {//æ—¶é—´ç›¸åŠ 
 	Time c;
 	c.tmHour = a.tmHour + b.tmHour;
 	c.tmMin = a.tmMin + b.tmMin;
 	return c;
 }
 
-bool judge(Time a, Time b) {//ÅĞ¶ÏÊ±¼äÊÇ·ñÏàµÈ
+bool judge(Time a, Time b) {//åˆ¤æ–­æ—¶é—´æ˜¯å¦ç›¸ç­‰
 	if (a.tmHour == b.tmHour && a.tmMin == b.tmMin)
 		return true;
 	else
 		return false;
 }
 
-int genRand(int min, int max) { // Éú³É[min, max]µÄËæ»úÕûÊı
+int genRand(int min, int max) { // ç”Ÿæˆ[min, max]çš„éšæœºæ•´æ•°
 	return (rand() % (max - min + 1)) + min;
 }
 
@@ -57,24 +57,24 @@ int bubbleSort(LinkQueue* Q, int len) {
 }
 
 void InitBank(Bank* bank, bool midRest ) {
-	//ÒøĞĞ¿ªÒµÊ±¼ä
+	//é“¶è¡Œå¼€ä¸šæ—¶é—´
 	bank->startTime.tmHour = 8;
 	bank->startTime.tmMin = 30;
-	//ÒøĞĞ¹ØÃÅÊ±¼ä
+	//é“¶è¡Œå…³é—¨æ—¶é—´
 	bank->endTime.tmHour = 17;
 	bank->endTime.tmMin = 00;
-	//ÒøĞĞÎçĞİÊ±¼ä
+	//é“¶è¡Œåˆä¼‘æ—¶é—´
 	bank->midRest_StartTime.tmHour = 12;
 	bank->midRest_StartTime.tmMin = 00;
 
 	bank->midRest_EndTime.tmHour = 14;
 	bank->midRest_EndTime.tmMin = 00;
 
-	//ÒøĞĞ´°¿ÚÊı
+	//é“¶è¡Œçª—å£æ•°
 	bank->windowsNum = 4;
-	//ÒøĞĞÊÇ·ñÎçĞİ
+	//é“¶è¡Œæ˜¯å¦åˆä¼‘
 	bank->midRest = midRest;
-	//ÒøĞĞ¸÷¸ö´°¿ÚµÄ³õÊ¼»¯
+	//é“¶è¡Œå„ä¸ªçª—å£çš„åˆå§‹åŒ–
 	for (int i = 0; i < bank->windowsNum; i++) {
 		bank->queWindows[i].remainingTime.tmHour = 0;
 		bank->queWindows[i].remainingTime.tmMin = 0;
@@ -89,7 +89,7 @@ void InitBank(Bank* bank, bool midRest ) {
 void genCustomer(Bank* bank, int numCustomer ) {
 	InitQueue(&bank->waitCustomer);
 	if (!bank->midRest) {
-		//ÎçĞİÅĞ¶Ï
+		//åˆä¼‘åˆ¤æ–­
 		while (Length(&bank->waitCustomer) < numCustomer) {
 			Customer cus;
 			cus.arrivalTime.tmHour = genRand(8, 16);
@@ -124,34 +124,34 @@ void genCustomer(Bank* bank, int numCustomer ) {
 			EnQueue(&bank->waitCustomer, cus);
 		}
 	}
-	//ÅÅĞò
+	//æ’åº
 	//bubble_sort(bank.waitCustomer, numCustomer);
 	bubbleSort(&bank->waitCustomer, Length(&bank->waitCustomer));
-	//×ÜµÄ¹Ë¿ÍÊıÁ¿³õÊ¼»¯
+	//æ€»çš„é¡¾å®¢æ•°é‡åˆå§‹åŒ–
 	bank->sumCustomer = 0;
 }
 
 void dynamicBank(Bank* bank, Time timer) {
 	int countInBank = 0;
-	int numMor = 0;//ÔçÉÏµÄÈËÊı
-	int numMoon = 0;//ÏÂÎçµÄÈËÊı
+	int numMor = 0;//æ—©ä¸Šçš„äººæ•°
+	int numMoon = 0;//ä¸‹åˆçš„äººæ•°
 
-	while (!judge(timer, bank->endTime)) {//ĞèÒª¶ÔÒøĞĞÏµÍ³½øĞĞ¶¯Ì¬Ë¢ĞÂ 
-			//Ñ­»·ÅĞ¶Ïµ±Ç°µÄn¸ö´°¿ÚÖĞµÄµÚÒ»Î»¹Ë¿ÍÊÇ·ñ³ö¶Ó
+	while (!judge(timer, bank->endTime)) {//éœ€è¦å¯¹é“¶è¡Œç³»ç»Ÿè¿›è¡ŒåŠ¨æ€åˆ·æ–° 
+			//å¾ªç¯åˆ¤æ–­å½“å‰çš„nä¸ªçª—å£ä¸­çš„ç¬¬ä¸€ä½é¡¾å®¢æ˜¯å¦å‡ºé˜Ÿ
 		for (int j = 0; j < bank->windowsNum; j++) {
 			if (bank->queWindows[j].customerQue.front->next != NULL) {
-				if (bank->queWindows[j].customerQue.front->next->data.serviceTimeRemain.tmMin == 0) {//Ä¬ÈÏ·şÎñÊ±³¤²»»á³¬³ö20min
+				if (bank->queWindows[j].customerQue.front->next->data.serviceTimeRemain.tmMin == 0) {//é»˜è®¤æœåŠ¡æ—¶é•¿ä¸ä¼šè¶…å‡º20min
 
 					bank->queWindows[j].customerQue.front->next->data.leavingTime.tmHour = timer.tmHour;
 					bank->queWindows[j].customerQue.front->next->data.leavingTime.tmMin = timer.tmMin;
 
 					bank->queWindows[j].sumTime.tmMin += Subtraction(bank->queWindows[j].customerQue.front->next->data.leavingTime, \
-						bank->queWindows[j].customerQue.front->next->data.arrivalTime);//Ö»ÓĞ·ÖÖÓ£¬
+						bank->queWindows[j].customerQue.front->next->data.arrivalTime);//åªæœ‰åˆ†é’Ÿï¼Œ
 
 					bank->queWindows[j].sumPerson++;
 					bank->queWindows[j].waitPerson--;
 					bank->sumCustomer++;
-					//ÏÂÎçµÄÊı¾İÍ³¼Æ
+					//ä¸‹åˆçš„æ•°æ®ç»Ÿè®¡
 					if (Subtraction(timer, bank->midRest_EndTime) >= 0 && bank->midRest) {
 						numMoon++;
 					}
@@ -161,16 +161,16 @@ void dynamicBank(Bank* bank, Time timer) {
 			}
 
 		}
-		//ÒøĞĞÍâµÈ´ı¹Ë¿ÍÊÇ·ñÈë¶Ó
+		//é“¶è¡Œå¤–ç­‰å¾…é¡¾å®¢æ˜¯å¦å…¥é˜Ÿ
 		while (true) {
 			Customer* first = GetHead(&bank->waitCustomer);
 			if (first == NULL || Subtraction(first->arrivalTime, timer) > 0)break;
 			if (first != NULL) {
-				if (judge(timer, first->arrivalTime)) {//µ½´ïÊ±¼äÓëÏÖÔÚÊ±¼äÆ¥Åä
+				if (judge(timer, first->arrivalTime)) {//åˆ°è¾¾æ—¶é—´ä¸ç°åœ¨æ—¶é—´åŒ¹é…
 					int numPeople = Length(&bank->queWindows[0].customerQue);
 					int locWindow = 0;
 
-					for (int j = 1; j < bank->windowsNum; j++) {//Ñ¡ÔñÈËÊı×îÉÙµÄ½ø
+					for (int j = 1; j < bank->windowsNum; j++) {//é€‰æ‹©äººæ•°æœ€å°‘çš„è¿›
 						int numPeople1 = Length(&bank->queWindows[j].customerQue);
 						if (numPeople > numPeople1) {
 							numPeople = numPeople1;
@@ -178,7 +178,7 @@ void dynamicBank(Bank* bank, Time timer) {
 
 						}
 					}
-					printf("µÚ%dÎ»¿Í»§µ½´ï£¬Ê±¼ä£º%d:%d,¿Í»§°ìÀíÒµÎñËùĞèÊ±¼ä%dmin\n", ++countInBank, timer.tmHour, timer.tmMin, first->serviceTime.tmMin);
+					printf("ç¬¬%dä½å®¢æˆ·åˆ°è¾¾ï¼Œæ—¶é—´ï¼š%d:%d,å®¢æˆ·åŠç†ä¸šåŠ¡æ‰€éœ€æ—¶é—´%dmin\n", ++countInBank, timer.tmHour, timer.tmMin, first->serviceTime.tmMin);
 
 					EnQueue(&bank->queWindows[locWindow].customerQue, *first);
 					bank->queWindows[locWindow].waitPerson++;
@@ -187,7 +187,7 @@ void dynamicBank(Bank* bank, Time timer) {
 			}
 		}
 
-		//¼ÆÊ±Æ÷++
+		//è®¡æ—¶å™¨++
 
 		timer.tmMin++;
 		if (timer.tmMin >= 60) {
@@ -195,19 +195,19 @@ void dynamicBank(Bank* bank, Time timer) {
 			timer.tmMin = 0;
 		}
 
-		//Ë¢ĞÂ¸÷¸ö´°¿ÚµÄÊ£Óà·şÎñÊ±³¤ºÍÀÛ¼Æ×ÜµÈ´ıÊ±³¤
+		//åˆ·æ–°å„ä¸ªçª—å£çš„å‰©ä½™æœåŠ¡æ—¶é•¿å’Œç´¯è®¡æ€»ç­‰å¾…æ—¶é•¿
 
 		for (int j = 0; j < bank->windowsNum; j++) {
 			if (bank->queWindows[j].customerQue.front->next) {
-				bank->queWindows[j].customerQue.front->next->data.serviceTimeRemain.tmMin--;//¶ÔÏóÎª¹Ë¿Í£¬Ã¿Î»¹Ë¿ÍµÄÊ£ÓàÊ±³¤¼õÉÙ
+				bank->queWindows[j].customerQue.front->next->data.serviceTimeRemain.tmMin--;//å¯¹è±¡ä¸ºé¡¾å®¢ï¼Œæ¯ä½é¡¾å®¢çš„å‰©ä½™æ—¶é•¿å‡å°‘
 			}
 		}
-		//ÎçĞİÇé¿ö
+		//åˆä¼‘æƒ…å†µ
 		if (judge(timer, bank->midRest_StartTime)) {
 			if (bank->midRest) {
 				for (int j = 0; j < bank->windowsNum; j++) {
 					if (bank->queWindows[j].customerQue.front->next != NULL) {
-						//---------------±éÀú¹Ë¿ÍµÈ´ı¶ÓÁĞ-------------------
+						//---------------éå†é¡¾å®¢ç­‰å¾…é˜Ÿåˆ—-------------------
 						Customer* first = GetHead(&bank->queWindows[j].customerQue);
 						bank->queWindows[j].sumPerson++;
 						while (true) {
@@ -224,20 +224,20 @@ void dynamicBank(Bank* bank, Time timer) {
 					}
 					numMor += bank->queWindows[j].sumPerson;
 				}
-				printf("ÉÏÎç¹²½Ó´ıÈËÊı%dÈË\n", numMor);
+				printf("ä¸Šåˆå…±æ¥å¾…äººæ•°%däºº\n", numMor);
 
 				timer.tmHour = bank->midRest_EndTime.tmHour;
 				timer.tmMin = bank->midRest_EndTime.tmMin;
 			}
 		}
 	}
-	//------------Ìí¼Ó×îºóµÈ´ı¹Ë¿ÍµÄÊ±¼ä----------------
+	//------------æ·»åŠ æœ€åç­‰å¾…é¡¾å®¢çš„æ—¶é—´----------------
 	for (int j = 0; j < bank->windowsNum; j++) {
 		if (bank->queWindows[j].customerQue.front->next != NULL) {
-			//---------------±éÀú¹Ë¿ÍµÈ´ı¶ÓÁĞ-------------------
+			//---------------éå†é¡¾å®¢ç­‰å¾…é˜Ÿåˆ—-------------------
 			Customer* first = GetHead(&bank->queWindows[j].customerQue);
 			bank->queWindows[j].sumPerson++;
-			//ÏÂÎçµÄÊı¾İÍ³¼Æ
+			//ä¸‹åˆçš„æ•°æ®ç»Ÿè®¡
 			if (bank->midRest) {
 				numMoon++;
 			}
@@ -255,56 +255,56 @@ void dynamicBank(Bank* bank, Time timer) {
 		}
 	}
 	if (bank->midRest)
-		printf("ÏÂÎç¹²¼Æ½Ó´ıÈËÊı%dÈË\n", numMoon);
+		printf("ä¸‹åˆå…±è®¡æ¥å¾…äººæ•°%däºº\n", numMoon);
 }
 
 double StaticInfoShow(Bank* bank, int numCustomer ) {
 
 
-	double a = 0;//×ÜµÄ¹Ë¿Í¶ºÁôÊ±¼ä
-	int numSer = 0;//ÒøĞĞ×ÜµÄ·şÎñÈËÊı
+	double a = 0;//æ€»çš„é¡¾å®¢é€—ç•™æ—¶é—´
+	int numSer = 0;//é“¶è¡Œæ€»çš„æœåŠ¡äººæ•°
 
 	for (int k = 0; k < bank->windowsNum; k++) {
 		a += bank->queWindows[k].sumTime.tmMin;
 		numSer += bank->queWindows[k].sumPerson;
 	}
 
-	printf("--------------------------ÒÔÏÂÎªÒøĞĞĞÅÏ¢--------------------------\n");
+	printf("--------------------------ä»¥ä¸‹ä¸ºé“¶è¡Œä¿¡æ¯--------------------------\n");
 	printf("|\n|\n|\n");
-	printf("|½ñÌì¹²½Ó´ı%d¸ö¹Ë¿Í£¬·şÎñ×ÜÈËÊı%d,½ñÌì¹Ë¿ÍµÄÆ½¾ù¶ºÁôÊ±¼äÎª£º%.1fmin\n", numCustomer, numSer, a / bank->sumCustomer);
+	printf("|ä»Šå¤©å…±æ¥å¾…%dä¸ªé¡¾å®¢ï¼ŒæœåŠ¡æ€»äººæ•°%d,ä»Šå¤©é¡¾å®¢çš„å¹³å‡é€—ç•™æ—¶é—´ä¸ºï¼š%.1fmin\n", numCustomer, numSer, a / bank->sumCustomer);
 	printf("|\n|\n|\n");
-	printf("--------------------------ÒÔÏÂÎª´°Ì¨ĞÅÏ¢--------------------------\n");
+	printf("--------------------------ä»¥ä¸‹ä¸ºçª—å°ä¿¡æ¯--------------------------\n");
 	for (int k = 0; k < bank->windowsNum; k++) {
-		printf("µÚ%dºÅ´°Ì¨£¬½Ó´ı·şÎñÈËÊı%dÈË£¬¹Ë¿ÍµÄµÈ´ıÊ±¼ä%dmin\n", k + 1, bank->queWindows[k].sumPerson, bank->queWindows[k].sumTime.tmMin);
+		printf("ç¬¬%då·çª—å°ï¼Œæ¥å¾…æœåŠ¡äººæ•°%däººï¼Œé¡¾å®¢çš„ç­‰å¾…æ—¶é—´%dmin\n", k + 1, bank->queWindows[k].sumPerson, bank->queWindows[k].sumTime.tmMin);
 	}
 	printf("------------------------------------------------------------------\n");
 
-	//printf("--------------ÒÔÏÂÎªÒ»ÌìµÄĞÅÏ¢---------------\n");
-	//printf("½ñÌì¹Ë¿ÍµÄÆ½¾ù¶ºÁôÊ±¼äÎª£º%.1fmin\n",a/bank->sumCustomer);
+	//printf("--------------ä»¥ä¸‹ä¸ºä¸€å¤©çš„ä¿¡æ¯---------------\n");
+	//printf("ä»Šå¤©é¡¾å®¢çš„å¹³å‡é€—ç•™æ—¶é—´ä¸ºï¼š%.1fmin\n",a/bank->sumCustomer);
 	return a;
 }
 
-double BankSimulation_Day(int numCustomer , bool midRest ) {//Ä£ÄâÒøĞĞÄ£ÄâÒ»Ìì
-	/*²ÎÊıËµÃ÷£º
-	*	numCustomer:±íÊ¾½ñÌìµÄµÈ´ı¹Ë¿ÍÈËÊı£¬¾ÍÊÇÒøĞĞÍâµÈ´ı¹Ë¿ÍÈËÊı
-	*	midRest:±íÊ¾½ñÌìÊÇ·ñÎçĞİ
+double BankSimulation_Day(int numCustomer , bool midRest ) {//æ¨¡æ‹Ÿé“¶è¡Œæ¨¡æ‹Ÿä¸€å¤©
+	/*å‚æ•°è¯´æ˜ï¼š
+	*	numCustomer:è¡¨ç¤ºä»Šå¤©çš„ç­‰å¾…é¡¾å®¢äººæ•°ï¼Œå°±æ˜¯é“¶è¡Œå¤–ç­‰å¾…é¡¾å®¢äººæ•°
+	*	midRest:è¡¨ç¤ºä»Šå¤©æ˜¯å¦åˆä¼‘
 	*/
 
-	//ÒÔ¾ø¶ÔÊ±¼ä¼ÆËã
+	//ä»¥ç»å¯¹æ—¶é—´è®¡ç®—
 	Bank bank;
 	Time time;
-	//ÒøĞĞ³õÊ¼»¯
+	//é“¶è¡Œåˆå§‹åŒ–
 	InitBank(&bank, midRest);
-	//ÒøĞĞÇ°µÄ¹Ë¿ÍµÈ´ı¶ÓÁĞ³õÊ¼»¯(Ëæ»ú³õÊ¼»¯)
+	//é“¶è¡Œå‰çš„é¡¾å®¢ç­‰å¾…é˜Ÿåˆ—åˆå§‹åŒ–(éšæœºåˆå§‹åŒ–)
 	genCustomer(&bank, numCustomer);
-	//¼ÆÊ±Æ÷³õÊ¼»¯
+	//è®¡æ—¶å™¨åˆå§‹åŒ–
 	Time timer;
 	timer.tmHour = bank.startTime.tmHour;
 	timer.tmMin = bank.startTime.tmMin;
-	//ÒøĞĞ¶¯Ì¬Ë¢ĞÂ£¬Ëæ×ÅÊ±¼ä
+	//é“¶è¡ŒåŠ¨æ€åˆ·æ–°ï¼Œéšç€æ—¶é—´
 	dynamicBank(&bank, timer);
-	//Êı¾İÊÕ¼¯²¢Õ¹Ê¾
+	//æ•°æ®æ”¶é›†å¹¶å±•ç¤º
 	double dayTime = StaticInfoShow(&bank, numCustomer);
-	//·µ»ØÒ»ÌìµÄ¹Ë¿ÍÆ½¾ùµÈ´ıÊ±³¤
+	//è¿”å›ä¸€å¤©çš„é¡¾å®¢å¹³å‡ç­‰å¾…æ—¶é•¿
 	return dayTime / bank.sumCustomer;
 }
